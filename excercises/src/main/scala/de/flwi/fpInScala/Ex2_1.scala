@@ -22,6 +22,4 @@ object Ex2_1 extends App {
     }
     fib_tail(n, 0, 1)
   }
-
-
 }
