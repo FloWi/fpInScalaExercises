@@ -14,9 +14,9 @@ class Ex3Spec extends FlatSpec with Matchers {
   }
 
   it should "dropWhile correctly" in {
-    List.dropWhile(List(1,2,3), (_: Int) < 2) shouldBe List(2,3)
-    List.dropWhile(List(1,2,3), (_: Int) < 1) shouldBe List(1,2,3)
-    List.dropWhile(List(1,2,3), (_: Int) < 5) shouldBe Nil
+    List.dropWhile(List(1,2,3))(_ < 2) shouldBe List(2,3)
+    List.dropWhile(List(1,2,3))(_ < 1) shouldBe List(1,2,3)
+    List.dropWhile(List(1,2,3))(_ < 5) shouldBe Nil
   }
 
   it should "init correctly (returning a List consisting of all but the last element of a List)" in {

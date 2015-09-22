@@ -75,10 +75,13 @@ object Ex3_List {
       }
     }
 
-    def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
+    /**
+     * needs to be curried to make type inference on f possible since the scala compiler doesn't provide _complete_ inference
+     */
+    def dropWhile[A](l: List[A])(f: A => Boolean): List[A] = l match {
       case Nil => Nil
       case li @Cons(h, tail) if !f(h) => li
-      case Cons(h, tail) if f(h) => dropWhile(tail, f)
+      case Cons(h, tail) if f(h) => dropWhile(tail)(f)
     }
 
     /**
