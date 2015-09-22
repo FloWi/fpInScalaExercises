@@ -1,4 +1,5 @@
-import de.flwi.fpInScala.{Ex2_1, Ex2_2}
+package de.flwi.fpInScala
+
 import org.scalatest._
 
 class Ex2_1Spec extends FlatSpec with Matchers {
@@ -29,18 +30,5 @@ class Ex2_1Spec extends FlatSpec with Matchers {
     val end = System.currentTimeMillis()
 
     (end - start) should be < 1000L
-  }
-}
-
-class Ex2_2Spec extends FlatSpec with Matchers {
-
-  "Ex2_2.isSorted" should "detect sorted array correctly" in {
-    Ex2_2.isSorted(Array(1, 2, 3, 4), (a: Int, b: Int) => a <= b) shouldBe true
-  }
-  it should "detect unsorted array correctly" in {
-    Ex2_2.isSorted(Array(2, 1, 3, 4), (a: Int, b: Int) => a <= b) shouldBe false
-  }
-  it should "mark an empty array as sorted" in {
-    Ex2_2.isSorted(Array.empty, (a: Int, b: Int) => a <= b) shouldBe true
   }
 }
