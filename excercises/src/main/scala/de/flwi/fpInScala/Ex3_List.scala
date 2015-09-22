@@ -58,7 +58,10 @@ object Ex3_List {
       case Cons(_, t) => t
     }
 
-    def setHead[A](l: List[A], h: A): List[A] = sys.error("todo")
+    def setHead[A](l: List[A], h: A): List[A] = l match {
+      case Nil => sys.error("setHead called on empty list")
+      case Cons(_, tail) => Cons(h, tail)
+    }
 
     def drop[A](l: List[A], n: Int): List[A] = sys.error("todo")
 
