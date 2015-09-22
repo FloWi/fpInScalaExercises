@@ -26,4 +26,17 @@ class Ex3Spec extends FlatSpec with Matchers {
   it should "initTailrec correctly (returning a List consisting of all but the last element of a List)" in {
     List.initTailrec(List(1,2,3,4)) shouldBe List(1,2,3)
   }
+
+  it should "let me see what Exercise 3.8 does" in {
+    val result = List.foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_))
+    result shouldBe List(1,2,3)
+
+    /*
+    foldRight(Cons(1, Cons(2, Cons(3, Nil))), Nil:List[Int])(Cons(_,_))
+    Cons(1, foldRight(Cons(2, Cons(3, Nil)), Nil:List[Int])(Cons(_,_)))
+    Cons(1, Cons(2, foldRight(Cons(3, Nil), Nil:List[Int])(Cons(_,_))))
+    Cons(1, Cons(2, Cons(3, foldRight(Nil, Nil:List[Int])(Cons(_,_)))))
+    Cons(1, Cons(2, Cons(3, Nil)))
+    */
+  }
 }
