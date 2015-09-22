@@ -73,10 +73,13 @@ object Ex3_List {
         case Nil => Nil
         case Cons(_, t) => drop(t, n-1)
       }
-
     }
 
-    def dropWhile[A](l: List[A], f: A => Boolean): List[A] = sys.error("todo")
+    def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
+      case Nil => Nil
+      case li @Cons(h, tail) if !f(h) => li
+      case Cons(h, tail) if f(h) => dropWhile(tail, f)
+    }
 
     def init[A](l: List[A]): List[A] = sys.error("todo")
 
