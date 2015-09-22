@@ -81,7 +81,38 @@ object Ex3_List {
       case Cons(h, tail) if f(h) => dropWhile(tail, f)
     }
 
-    def init[A](l: List[A]): List[A] = sys.error("todo")
+    /**
+     * returning a List consisting of all but the last element of a List
+     */
+    def init[A](l: List[A]): List[A] = {
+
+      l match {
+        case Nil => sys.error("init on empty list")
+        case Cons(_, Nil) => Nil
+        case Cons(h, tail) => Cons(h, init(tail))
+      }
+    }
+
+    /**
+     * returning a List consisting of all but the last element of a List
+     */
+    def initTailrec[A](l: List[A]): List[A] = {
+      import collection.mutable.ListBuffer
+      val buf = new ListBuffer[A]
+
+      @annotation.tailrec
+      def helper(current: List[A]): List[A] = {
+        current match {
+          case Nil => sys.error("init on empty list")
+          case Cons(_, Nil) => List(buf.toList: _*)
+          case Cons(h, tail) =>
+            buf.append(h)
+            helper(tail)
+        }
+      }
+
+      helper(l)
+    }
 
     def length[A](l: List[A]): Int = sys.error("todo")
 
