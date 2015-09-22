@@ -1,5 +1,7 @@
 package de.flwi.fpInScala
 
+import scala.annotation.tailrec
+
 
 object Ex3_List {
 
@@ -63,7 +65,16 @@ object Ex3_List {
       case Cons(_, tail) => Cons(h, tail)
     }
 
-    def drop[A](l: List[A], n: Int): List[A] = sys.error("todo")
+    @tailrec
+    def drop[A](l: List[A], n: Int): List[A] = {
+
+      if(n == 0) l
+      else l match {
+        case Nil => Nil
+        case Cons(_, t) => drop(t, n-1)
+      }
+
+    }
 
     def dropWhile[A](l: List[A], f: A => Boolean): List[A] = sys.error("todo")
 
