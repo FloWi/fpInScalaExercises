@@ -39,4 +39,9 @@ class Ex3Spec extends FlatSpec with Matchers {
     Cons(1, Cons(2, Cons(3, Nil)))
     */
   }
+
+  it should "calculate the length correctly" in {
+    List.length(List(1,2,3,4)) shouldBe 4
+    List.length(Nil) shouldBe 0
+  }
 }
