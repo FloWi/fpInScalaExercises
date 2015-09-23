@@ -34,7 +34,12 @@ class OptionSpec extends FlatSpec with Matchers {
   "Option.mean" should "be calculated correctly" in {
     Option.mean(Seq(2,4)) shouldBe Some(3.0)
     Option.mean(Seq.empty) shouldBe None
+  }
 
+  "Option.map2" should "lift f correctly" in {
+    Option.map2(Some(1), Some(2))(_+_) shouldBe Some(3)
+    Option.map2(None: Option[Int], Some(2))(_+_) shouldBe None
+    Option.map2(Some(1), None: Option[Int])(_+_) shouldBe None
   }
 
 }
