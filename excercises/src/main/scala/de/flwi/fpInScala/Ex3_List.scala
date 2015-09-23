@@ -150,8 +150,10 @@ object Ex3_List {
       foldRight(a1, a2)(Cons(_,_))
     }
 
+    def concatenate[A](lists: List[List[A]]): List[A] = {
+      foldRight(lists, Nil: List[A])(append)
+    }
+
     def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
   }
-
-
 }

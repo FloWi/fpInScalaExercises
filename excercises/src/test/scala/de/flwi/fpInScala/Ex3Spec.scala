@@ -59,7 +59,17 @@ class Ex3Spec extends FlatSpec with Matchers {
     List.reverse(List(1, 2, 3, 4)) shouldBe List(4,3,2,1)
   }
 
+  it should "append correctly" in {
+    List.append(List(1,2), List(3,4)) shouldBe List(1,2,3,4)
+    List.append(Nil, List(3,4)) shouldBe List(3,4)
+    List.append(List(1,2), Nil) shouldBe List(1,2)
+  }
+
   it should "behave the same with append using given and my impl" in {
-    List.append()
+    List.append(List(1,2,3), List(4,5,6)) shouldBe List.rightFoldedAppend(List(1,2,3), List(4,5,6))
+  }
+
+  it should "concatenate Lists correctly" in {
+    List.concatenate(List(List(1,2), List(3,4), List(5,6))) shouldBe List(1,2,3,4,5,6)
   }
 }
