@@ -171,7 +171,7 @@ object Ex3_List {
     }
 
     def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
-      concatenate(foldRight(as, Nil: List[List[B]])((cur, acc) => Cons(f(cur), acc)))
+      concatenate(map(as)(f))
     }
   }
 }
