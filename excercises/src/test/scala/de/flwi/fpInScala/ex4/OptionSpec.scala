@@ -5,4 +5,9 @@ import scala.{Either => _, Option => _, Some => _} // hide std library `Option`,
 
 class OptionSpec extends FlatSpec with Matchers {
 
+  "An Option" should "map correctly" in {
+    Some(1).map(_+1) shouldBe Some(2)
+    (None: Option[Int]).map(_+1) shouldBe None
+  }
+
 }

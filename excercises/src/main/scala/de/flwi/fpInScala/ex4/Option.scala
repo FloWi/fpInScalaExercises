@@ -3,7 +3,10 @@ package de.flwi.fpInScala.ex4
 import scala.{Either => _, Option => _, Some => _} // hide std library `Option`, `Some` and `Either`, since we are writing our own in this chapter
 
 sealed trait Option[+A] {
-  def map[B](f: A => B): Option[B] = sys.error("todo")
+  def map[B](f: A => B): Option[B] = this match {
+    case Some(a) => Some(f(a))
+    case None => None
+  }
 
   def getOrElse[B>:A](default: => B): B = sys.error("todo")
 
