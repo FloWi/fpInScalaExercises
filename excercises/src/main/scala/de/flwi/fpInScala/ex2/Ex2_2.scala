@@ -1,4 +1,4 @@
-package de.flwi.fpInScala
+package de.flwi.fpInScala.ex2
 
 import scala.annotation.tailrec
 

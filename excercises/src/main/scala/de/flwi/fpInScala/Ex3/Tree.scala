@@ -1,4 +1,4 @@
-package de.flwi.fpInScala.Ex3
+package de.flwi.fpInScala.ex3
 
 sealed trait Tree[+A] {
   def size: Int

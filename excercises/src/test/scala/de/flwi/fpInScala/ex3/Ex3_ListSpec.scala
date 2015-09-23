@@ -1,10 +1,11 @@
-package de.flwi.fpInScala
+package de.flwi.fpInScala.ex3
 
+import de.flwi.fpInScala.ex3
 import org.scalatest._
 
 class Ex3_ListSpec extends FlatSpec with Matchers {
 
-  import Ex3._
+  import ex3._
 
   "List" should "return the same if 0 elements are being dropped" in {
     List.drop(List(1, 2, 3), 0) shouldBe List(1, 2, 3)

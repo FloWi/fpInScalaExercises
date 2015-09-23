@@ -1,6 +1,6 @@
-package de.flwi.fpInScala
+package de.flwi.fpInScala.ex3
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 class ScalaListSpec extends FlatSpec with Matchers {
 

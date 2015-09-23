@@ -1,10 +1,11 @@
-package de.flwi.fpInScala
+package de.flwi.fpInScala.ex3
 
-import org.scalatest.{Matchers, FlatSpec}
+import de.flwi.fpInScala.ex3
+import org.scalatest.{FlatSpec, Matchers}
 
 class Ex3_TreeSpec extends FlatSpec with Matchers {
 
-  import Ex3._
+  import ex3._
 
   "A tree" should "calculate the size correctly" in {
     Leaf(1).size shouldBe 1
