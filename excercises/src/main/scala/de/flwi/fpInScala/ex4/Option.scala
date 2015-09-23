@@ -1,6 +1,7 @@
 package de.flwi.fpInScala.ex4
 
 import scala.annotation.tailrec
+import scala.collection.mutable.ArrayBuffer
 import scala.{Either => _, Option => _, Some => _} // hide std library `Option`, `Some` and `Either`, since we are writing our own in this chapter
 
 sealed trait Option[+A] {
@@ -58,24 +59,23 @@ object Option {
   def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
     a.flatMap(someA => b.map(someB => f(someA,someB)))
 
-  def sequence[A](l: List[Option[A]]): Option[List[A]] = {
-    //If the original list contains None even once, the result of the function should be None;
-    //otherwise the result should be Some with a list of all the values.
+  def sequence[A](l: List[Option[A]]): Option[List[A]] =
+    traverse(l)(a => a)
 
-    @tailrec
-    def helper(list: List[Option[A]], result: List[A]): Option[List[A]] = {
-      list match {
-        case Nil => Some(result.reverse)
-        case None :: _ => None
-        case Some(a) :: tail => helper(tail, a :: result)
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = {
+
+    val buf = ArrayBuffer.empty[B]
+    def helper(list: List[A]): Option[List[B]] = list match {
+      case Nil => Some(buf.toList)
+      case h :: cons => f(h) match {
+        case Some(hh) => buf += hh; helper(cons)
+        case None => None
       }
     }
 
-    l match {
+    a match {
       case Nil => None
-      case _ => helper(l, Nil)
+      case _ => helper(a)
     }
   }
-
-  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = sys.error("todo")
 }

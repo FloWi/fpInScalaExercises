@@ -48,4 +48,11 @@ class OptionSpec extends FlatSpec with Matchers {
     Option.sequence(List.empty) shouldBe None
   }
 
+  "Option.traverse" should "convert a list properly into an Option of List" in {
+    Option.traverse(List(1,2,3))(x => Some(x*2)) shouldBe Some(List(2,4,6))
+    Option.traverse(List(1,2,3))(x => if(x % 2 == 0) Some(x*2) else None) shouldBe None
+    Option.traverse(List(1,2,3))(x => None) shouldBe None
+    Option.sequence(List.empty) shouldBe None
+  }
+
 }
