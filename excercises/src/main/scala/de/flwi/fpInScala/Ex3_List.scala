@@ -139,6 +139,17 @@ object Ex3_List {
       foldLeft(l, Nil: List[A])((acc, curr) => Cons(curr, acc))
     }
 
+    def rightFoldedAppend[A](a1: List[A], a2: List[A]): List[A] = {
+      /*
+        def append[A](a1: List[A], a2: List[A]): List[A] =
+          a1 match {
+            case Nil => a2
+            case Cons(h,t) => Cons(h, append(t, a2))
+          }
+       */
+      foldRight(a1, a2)(Cons(_,_))
+    }
+
     def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
   }
 

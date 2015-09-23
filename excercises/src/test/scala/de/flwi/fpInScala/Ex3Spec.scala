@@ -58,4 +58,8 @@ class Ex3Spec extends FlatSpec with Matchers {
   it should "reverse correctly" in {
     List.reverse(List(1, 2, 3, 4)) shouldBe List(4,3,2,1)
   }
+
+  it should "behave the same with append using given and my impl" in {
+    List.append()
+  }
 }
