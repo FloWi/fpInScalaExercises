@@ -1,5 +1,6 @@
 package de.flwi.fpInScala.ex4
 
+import scala.annotation.tailrec
 import scala.{Either => _, Option => _, Some => _} // hide std library `Option`, `Some` and `Either`, since we are writing our own in this chapter
 
 sealed trait Option[+A] {
@@ -57,7 +58,24 @@ object Option {
   def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
     a.flatMap(someA => b.map(someB => f(someA,someB)))
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = sys.error("todo")
+  def sequence[A](l: List[Option[A]]): Option[List[A]] = {
+    //If the original list contains None even once, the result of the function should be None;
+    //otherwise the result should be Some with a list of all the values.
+
+    @tailrec
+    def helper(list: List[Option[A]], result: List[A]): Option[List[A]] = {
+      list match {
+        case Nil => Some(result.reverse)
+        case None :: _ => None
+        case Some(a) :: tail => helper(tail, a :: result)
+      }
+    }
+
+    l match {
+      case Nil => None
+      case _ => helper(l, Nil)
+    }
+  }
 
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = sys.error("todo")
 }

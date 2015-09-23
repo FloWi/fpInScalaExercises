@@ -42,4 +42,10 @@ class OptionSpec extends FlatSpec with Matchers {
     Option.map2(Some(1), None: Option[Int])(_+_) shouldBe None
   }
 
+  "Option.sequence" should "convert a list of options properly into an Option of List" in {
+    Option.sequence(List(Some(1), Some(2), Some(3))) shouldBe Some(List(1,2,3))
+    Option.sequence(List(Some(1), Some(2), None)) shouldBe None
+    Option.sequence(List.empty) shouldBe None
+  }
+
 }
