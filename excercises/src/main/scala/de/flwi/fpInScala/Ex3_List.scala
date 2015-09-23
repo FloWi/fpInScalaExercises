@@ -119,7 +119,21 @@ object Ex3_List {
 
     def length[A](l: List[A]): Int = foldRight(l, 0)((_, cur) => cur + 1)
 
-    def foldLeft[A,B](l: List[A], z: B)(f: (B, A) => B): B = sys.error("todo")
+    @tailrec
+    def foldLeft[A, B](l: List[A], z: B)(f: (B, A) => B): B = {
+
+      l match {
+        case Nil => sys.error("foldLeft on empty list")
+        case Cons(h, Nil) => f(z,h)
+        case Cons(h, t) => foldLeft(t, f(z, h))(f)
+      }
+    }
+
+    def leftFoldedSum(ints: List[Int]): Int = foldLeft(ints, 0)(_ + _)
+
+    def leftFoldedProduct(ds: List[Double]): Double = foldLeft(ds, 1.0)(_ * _)
+
+    def leftFoldedLength[A](l: List[A]): Int = foldLeft(l, 0)((cur, _) => cur + 1)
 
     def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
   }

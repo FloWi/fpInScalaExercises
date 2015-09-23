@@ -44,4 +44,15 @@ class Ex3Spec extends FlatSpec with Matchers {
     List.length(List(1,2,3,4)) shouldBe 4
     List.length(Nil) shouldBe 0
   }
+
+  it should "behave the same with sum, product and length using the recursive and tailrecursive mplementations" in {
+    Vector(1.to(4), 0.to(1), 1.to(1000)).foreach {
+      range =>
+        val ints = List(range: _*)
+        val doubles = List(range.map(_.toDouble): _*)
+        List.sum(ints) shouldBe List.leftFoldedSum(ints)
+        List.product(doubles) shouldBe List.leftFoldedProduct(doubles)
+        List.length(ints) shouldBe List.leftFoldedLength(ints)
+    }
+  }
 }
