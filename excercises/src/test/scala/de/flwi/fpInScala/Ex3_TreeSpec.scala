@@ -18,6 +18,12 @@ class Ex3_TreeSpec extends FlatSpec with Matchers {
     Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)).depth shouldBe 2
   }
 
+  it should "map correctly" in {
+
+    Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)).map(_.toString) shouldBe Branch(Branch(Leaf("1"), Leaf("2")), Leaf("3"))
+    Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)).map(_*2) shouldBe Branch(Branch(Leaf(2), Leaf(4)), Leaf(6))
+  }
+
   "A Tree[Int]" should "find the max value" in {
     Tree.maximum(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))) shouldBe 3
     Tree.maximum(Branch(Branch(Leaf(-1), Leaf(-2)), Leaf(-3))) shouldBe -1

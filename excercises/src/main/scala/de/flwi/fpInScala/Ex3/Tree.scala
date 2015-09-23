@@ -5,7 +5,17 @@ sealed trait Tree[+A] {
 
   def depth: Int
 
+  def map[B](f: (A) => B): Tree[B] = {
 
+    def helper(tree: Tree[A]): Tree[B] = {
+
+      tree match {
+        case Leaf(value) => Leaf(f(value))
+        case Branch(left, right) => Branch(helper(left), helper(right))
+      }
+    }
+    helper(this)
+  }
 }
 
 case class Leaf[A](value: A) extends Tree[A] {
