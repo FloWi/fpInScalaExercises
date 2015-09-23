@@ -192,10 +192,10 @@ object Ex3_List {
       helper(first, second, Nil)
     }
 
-    def zipWith[A](first: List[A], second: List[A])(f: (A,A) => A) = {
+    def zipWith[A, B, C](first: List[A], second: List[B])(f: (A,B) => C) = {
 
       @tailrec
-      def helper(l1: List[A], l2: List[A], result: List[A]): List[A] = {
+      def helper(l1: List[A], l2: List[B], result: List[C]): List[C] = {
         (l1, l2) match {
           case (Nil, Nil) => reverse(result)
           case (Nil, _) => Nil
