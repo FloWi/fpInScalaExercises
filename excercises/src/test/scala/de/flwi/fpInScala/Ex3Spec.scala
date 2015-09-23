@@ -78,4 +78,8 @@ class Ex3Spec extends FlatSpec with Matchers {
   it should "toStringEachDouble correctly" in {
     List.toStringEachDouble(List(1.0,2.0,3.0)) shouldBe List("1.0", "2.0", "3.0")
   }
+
+  it should "do map correctly" in {
+    List.map(List(1,2,3,4))(_*2) shouldBe List(2,4,6,8)
+  }
 }

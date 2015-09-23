@@ -162,6 +162,8 @@ object Ex3_List {
       foldRight(doubles, Nil: List[String])((cur,acc) => Cons(cur.toString, acc))
     }
 
-    def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
+    def map[A,B](l: List[A])(f: A => B): List[B] = {
+      foldRight(l, Nil: List[B])((cur, acc) => Cons(f(cur), acc))
+    }
   }
 }
