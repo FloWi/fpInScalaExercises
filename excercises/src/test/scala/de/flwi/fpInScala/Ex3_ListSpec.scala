@@ -2,7 +2,7 @@ package de.flwi.fpInScala
 
 import org.scalatest._
 
-class Ex3Spec extends FlatSpec with Matchers {
+class Ex3_ListSpec extends FlatSpec with Matchers {
 
   import Ex3_List._
 

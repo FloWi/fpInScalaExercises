@@ -234,6 +234,5 @@ object Ex3_List {
       case _ if startsWith(sup, sub) => true
       case Cons(_,t) => hasSubsequenceFromSol(t, sub)
     }
-
   }
 }
