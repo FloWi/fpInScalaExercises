@@ -10,26 +10,26 @@ class Ex3Spec extends FlatSpec with Matchers {
     List.drop(List(1, 2, 3), 0) shouldBe List(1, 2, 3)
   }
   it should "drop 1 element correctly" in {
-    List.drop(List(1,2,3), 1) shouldBe List(2,3)
+    List.drop(List(1, 2, 3), 1) shouldBe List(2, 3)
   }
 
   it should "dropWhile correctly" in {
-    List.dropWhile(List(1,2,3))(_ < 2) shouldBe List(2,3)
-    List.dropWhile(List(1,2,3))(_ < 1) shouldBe List(1,2,3)
-    List.dropWhile(List(1,2,3))(_ < 5) shouldBe Nil
+    List.dropWhile(List(1, 2, 3))(_ < 2) shouldBe List(2, 3)
+    List.dropWhile(List(1, 2, 3))(_ < 1) shouldBe List(1, 2, 3)
+    List.dropWhile(List(1, 2, 3))(_ < 5) shouldBe Nil
   }
 
   it should "init correctly (returning a List consisting of all but the last element of a List)" in {
-    List.init(List(1,2,3,4)) shouldBe List(1,2,3)
+    List.init(List(1, 2, 3, 4)) shouldBe List(1, 2, 3)
   }
 
   it should "initTailrec correctly (returning a List consisting of all but the last element of a List)" in {
-    List.initTailrec(List(1,2,3,4)) shouldBe List(1,2,3)
+    List.initTailrec(List(1, 2, 3, 4)) shouldBe List(1, 2, 3)
   }
 
   it should "let me see what Exercise 3.8 does" in {
-    val result = List.foldRight(List(1,2,3), Nil:List[Int])(Cons(_,_))
-    result shouldBe List(1,2,3)
+    val result = List.foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _))
+    result shouldBe List(1, 2, 3)
 
     /*
     foldRight(Cons(1, Cons(2, Cons(3, Nil))), Nil:List[Int])(Cons(_,_))
@@ -41,7 +41,7 @@ class Ex3Spec extends FlatSpec with Matchers {
   }
 
   it should "calculate the length correctly" in {
-    List.length(List(1,2,3,4)) shouldBe 4
+    List.length(List(1, 2, 3, 4)) shouldBe 4
     List.length(Nil) shouldBe 0
   }
 
@@ -54,5 +54,8 @@ class Ex3Spec extends FlatSpec with Matchers {
         List.product(doubles) shouldBe List.leftFoldedProduct(doubles)
         List.length(ints) shouldBe List.leftFoldedLength(ints)
     }
+  }
+  it should "reverse correctly" in {
+    List.reverse(List(1, 2, 3, 4)) shouldBe List(4,3,2,1)
   }
 }
