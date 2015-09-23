@@ -95,4 +95,8 @@ class Ex3Spec extends FlatSpec with Matchers {
     List.filter(List(1,2,3,4))(_ % 2 == 0) shouldBe List.flatMappedFilter(List(1,2,3,4))(_ % 2 == 0)
   }
 
+  it should "addingElementsOfTwoLists correctly" in {
+    List.addingElementsOfTwoLists(List(1,2,3,4), List(1,2,3,4)) shouldBe List(2,4,6,8)
+  }
+
 }

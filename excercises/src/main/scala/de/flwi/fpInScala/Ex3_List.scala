@@ -177,5 +177,21 @@ object Ex3_List {
     def flatMappedFilter[A](as: List[A])(f: A => Boolean): List[A] = {
       flatMap(as)(a => if(f(a)) Cons(a, Nil) else Nil)
     }
+
+    def addingElementsOfTwoLists(first: List[Int], second: List[Int]): List[Int] = {
+      if(first == Nil || second == Nil) sys.error("Lists empty (possibly not the same length)")
+
+      @tailrec
+      def helper(l1: List[Int], l2: List[Int], result: List[Int]): List[Int] = {
+        if (l1 == Nil && l2 == Nil) reverse(result)
+        else {
+          val Cons(h1, t1) = l1
+          val Cons(h2, t2) = l2
+
+          helper(t1, t2, Cons(h1 + h2, result))
+        }
+      }
+      helper(first, second, Nil)
+    }
   }
 }
