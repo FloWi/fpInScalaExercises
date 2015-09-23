@@ -65,6 +65,8 @@ object Option {
   def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = {
 
     val buf = ArrayBuffer.empty[B]
+
+    @tailrec
     def helper(list: List[A]): Option[List[B]] = list match {
       case Nil => Some(buf.toList)
       case h :: cons => f(h) match {
@@ -76,6 +78,14 @@ object Option {
     a match {
       case Nil => None
       case _ => helper(a)
+    }
+  }
+
+  def traverse2[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = {
+    a match {
+      case Nil => None
+      //much shorter, but imho not super-readable
+      case _ => a.foldRight[Option[List[B]]](Some(Nil))((h, t) => map2(f(h), t)(_ :: _))
     }
   }
 }
