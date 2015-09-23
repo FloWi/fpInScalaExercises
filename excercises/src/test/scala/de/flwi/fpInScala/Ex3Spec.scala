@@ -103,5 +103,17 @@ class Ex3Spec extends FlatSpec with Matchers {
     List.zipWith(List(1,2,3,4), List(1,2,3,4))(_+_) shouldBe List(2,4,6,8)
     List.zipWith(List(1,2,3,4), List(1,2,3,4))(_*_) shouldBe List(1,4,9,16)
   }
+
+  it should "calculate hasSubsequence correctly" in {
+    List.hasSubsequence(List(1,2,3,4), List(1,2)) shouldBe true
+    List.hasSubsequence(List(1,2,3,4), List(2,3)) shouldBe true
+    List.hasSubsequence(List(1,2,3,4), List(4)) shouldBe true
+    List.hasSubsequence(List(1,2,3,4), Nil) shouldBe true
+
+    List.hasSubsequence(List(1,2,3,4), List(5)) shouldBe false
+    List.hasSubsequence(List(1,2,3,4), List(1,2,3,4,5)) shouldBe false
+    List.hasSubsequence(Nil, List(1,2,3,4,5)) shouldBe false
+  }
+
 }
 

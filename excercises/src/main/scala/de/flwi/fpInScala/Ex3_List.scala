@@ -205,5 +205,20 @@ object Ex3_List {
       }
       helper(first, second, Nil)
     }
+
+    def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+
+      @tailrec
+      def helper(l: List[A], s: List[A]): Boolean = {
+        (l, s) match {
+          case (_, Nil) => true
+          case(Nil, _) => false
+          case(Cons(hL, tL), Cons(hS, _)) if hL != hS => helper(tL, s)
+          case(Cons(hL, tL), Cons(hS, tS)) => helper(tL, tS)
+        }
+      }
+
+      helper(sup, sub)
+    }
   }
 }
