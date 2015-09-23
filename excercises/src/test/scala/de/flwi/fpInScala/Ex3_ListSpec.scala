@@ -4,7 +4,7 @@ import org.scalatest._
 
 class Ex3_ListSpec extends FlatSpec with Matchers {
 
-  import Ex3_List._
+  import Ex3._
 
   "List" should "return the same if 0 elements are being dropped" in {
     List.drop(List(1, 2, 3), 0) shouldBe List(1, 2, 3)
