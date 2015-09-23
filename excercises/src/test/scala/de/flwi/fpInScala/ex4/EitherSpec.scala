@@ -9,22 +9,30 @@ import de.flwi.fpInScala.ex4.Either._
 class EitherSpec extends FlatSpec with Matchers {
 
   val failed = Left("exception"): Either[String, Int]
-  val successful = Right(1): Either[String, Int]
+  def successful(n: Int): Either[String, Int] = Right(n)
 
   "Either" should "map correctly" in {
     failed.map(_+2) shouldBe failed
-    successful.map(_+2) shouldBe Right(3)
+    successful(1).map(_+2) shouldBe Right(3)
   }
 
   it should "flatMap correctly" in {
     failed.flatMap(a => Try(a+1)) shouldBe failed
-    successful.flatMap(a => Try(a+1)) shouldBe Right(2)
+    successful(1).flatMap(a => Try(a+1)) shouldBe Right(2)
   }
 
-  it should "orElse correctly" ignore {
-    Some(1).orElse(Some(2)) shouldBe Some(1)
-    (None: Option[Int]).orElse(Some(2)) shouldBe Some(2)
+  it should "orElse correctly" in {
+    failed.orElse(successful(1)) shouldBe successful(1)
+    successful(1).orElse(failed) shouldBe successful(1)
+    successful(2).orElse(successful(1)) shouldBe successful(2)
+    failed.orElse(failed) shouldBe failed
   }
 
+  it should "lift f correctly with map2" in {
+    successful(1).map2(failed)(_+_) shouldBe failed
+    failed.map2(successful(2))(_+_) shouldBe failed
+    failed.map2(failed)(_+_) shouldBe failed
 
+    successful(1).map2(successful(2))(_+_) shouldBe successful(3)
+  }
 }
