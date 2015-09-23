@@ -31,4 +31,10 @@ class OptionSpec extends FlatSpec with Matchers {
     (None: Option[Int]).filter(_ % 2 == 0) shouldBe None
   }
 
+  "Option.mean" should "be calculated correctly" in {
+    Option.mean(Seq(2,4)) shouldBe Some(3.0)
+    Option.mean(Seq.empty) shouldBe None
+
+  }
+
 }
