@@ -99,4 +99,9 @@ class Ex3Spec extends FlatSpec with Matchers {
     List.addingElementsOfTwoLists(List(1,2,3,4), List(1,2,3,4)) shouldBe List(2,4,6,8)
   }
 
+  it should "zipWith correctly" in {
+    List.zipWith(List(1,2,3,4), List(1,2,3,4))(_+_) shouldBe List(2,4,6,8)
+    List.zipWith(List(1,2,3,4), List(1,2,3,4))(_*_) shouldBe List(1,4,9,16)
+  }
+
 }

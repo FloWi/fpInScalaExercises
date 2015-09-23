@@ -193,5 +193,21 @@ object Ex3_List {
       }
       helper(first, second, Nil)
     }
+
+    def zipWith[A](first: List[A], second: List[A])(f: (A,A) => A) = {
+      if(first == Nil || second == Nil) sys.error("Lists empty (possibly not the same length)")
+
+      @tailrec
+      def helper(l1: List[A], l2: List[A], result: List[A]): List[A] = {
+        if (l1 == Nil && l2 == Nil) reverse(result)
+        else {
+          val Cons(h1, t1) = l1
+          val Cons(h2, t2) = l2
+
+          helper(t1, t2, Cons(f(h1,h2), result))
+        }
+      }
+      helper(first, second, Nil)
+    }
   }
 }
