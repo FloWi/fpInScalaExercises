@@ -86,7 +86,13 @@ class Ex3Spec extends FlatSpec with Matchers {
   it should "filter correctly" in {
     List.filter(List(1,2,3,4))(_ % 2 == 0) shouldBe List(2,4)
   }
+
   it should "flatMap correctly" in {
     List.flatMap(List(1,2,3))(i => List(i,i)) shouldBe List(1,1,2,2,3,3)
   }
+
+  it should "flatMappedFilter correctly" in {
+    List.filter(List(1,2,3,4))(_ % 2 == 0) shouldBe List.flatMappedFilter(List(1,2,3,4))(_ % 2 == 0)
+  }
+
 }

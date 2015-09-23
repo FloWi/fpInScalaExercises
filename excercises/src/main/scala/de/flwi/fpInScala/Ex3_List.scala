@@ -173,5 +173,9 @@ object Ex3_List {
     def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
       concatenate(map(as)(f))
     }
+
+    def flatMappedFilter[A](as: List[A])(f: A => Boolean): List[A] = {
+      flatMap(as)(a => if(f(a)) Cons(a, Nil) else Nil)
+    }
   }
 }
