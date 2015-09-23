@@ -25,4 +25,10 @@ class OptionSpec extends FlatSpec with Matchers {
     (None: Option[Int]).orElse(Some(2)) shouldBe Some(2)
   }
 
+  it should "filter correctly" in {
+    Some(1).filter(_ % 2 == 0) shouldBe None
+    Some(2).filter(_ % 2 == 0) shouldBe Some(2)
+    (None: Option[Int]).filter(_ % 2 == 0) shouldBe None
+  }
+
 }

@@ -13,11 +13,14 @@ sealed trait Option[+A] {
     case None => default
   }
 
-  def flatMap[B](f: A => Option[B]): Option[B] = map(f) getOrElse None
+  def flatMap[B](f: A => Option[B]): Option[B] =
+    map(f) getOrElse None
 
-  def orElse[B>:A](ob: => Option[B]): Option[B] = map(x => Some(x)) getOrElse ob
+  def orElse[B>:A](ob: => Option[B]): Option[B] =
+    map(x => Some(x)) getOrElse ob
 
-  def filter(f: A => Boolean): Option[A] = sys.error("todo")
+  def filter(f: A => Boolean): Option[A] =
+    flatMap(a => if (f(a)) Some(a) else None)
 }
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
