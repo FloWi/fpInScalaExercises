@@ -19,23 +19,10 @@ case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A] {
 
 object Tree {
 
-
-  def maximum[A: Numeric](tree: Tree[A]): A = {
-
-    val numeric: Numeric[A] = implicitly[Numeric[A]]
-
-    def helper(t: Tree[A], currentMax: A): A = {
-      t match {
-        case Leaf(value) =>
-          numeric.max(value, currentMax)
-        case Branch(left, right) =>
-          val leftMax = helper(left, currentMax)
-          val rightMax = helper(right, currentMax)
-          numeric.max(leftMax, rightMax)
-      }
+  def maximum[A](tree: Tree[A])(implicit n: Numeric[A]): A = {
+    tree match {
+      case Leaf(value) => value
+      case Branch(left, right) => n.max(maximum(left), maximum(right))
     }
-
-    helper(tree, numeric.fromInt(Int.MinValue))
   }
-
 }
