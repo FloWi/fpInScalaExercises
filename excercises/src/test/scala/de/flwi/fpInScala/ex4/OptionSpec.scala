@@ -20,4 +20,9 @@ class OptionSpec extends FlatSpec with Matchers {
     (None: Option[Int]).flatMap(i => Some(i+1)) shouldBe None
   }
 
+  it should "orElse correctly" in {
+    Some(1).orElse(Some(2)) shouldBe Some(1)
+    (None: Option[Int]).orElse(Some(2)) shouldBe Some(2)
+  }
+
 }
