@@ -165,5 +165,9 @@ object Ex3_List {
     def map[A,B](l: List[A])(f: A => B): List[B] = {
       foldRight(l, Nil: List[B])((cur, acc) => Cons(f(cur), acc))
     }
+
+    def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+      foldRight(as, Nil: List[A])((cur, acc) => if(f(cur)) Cons(cur, acc) else acc)
+    }
   }
 }
