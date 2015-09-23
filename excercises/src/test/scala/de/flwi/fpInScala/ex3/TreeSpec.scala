@@ -3,7 +3,7 @@ package de.flwi.fpInScala.ex3
 import de.flwi.fpInScala.ex3
 import org.scalatest.{FlatSpec, Matchers}
 
-class Ex3_TreeSpec extends FlatSpec with Matchers {
+class TreeSpec extends FlatSpec with Matchers {
 
   import ex3._
 

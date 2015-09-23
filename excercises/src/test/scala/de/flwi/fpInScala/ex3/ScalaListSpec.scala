@@ -5,7 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class ScalaListSpec extends FlatSpec with Matchers {
 
   "scala list" should "show the difference between reduceLeft, foldLeft and scanLeft" in {
-    val abc = List("A", "B", "C")
+    val abc = collection.immutable.List("A", "B", "C")
 
     def add(res: String, x: String) = {
       println(s"op: $res + $x = ${res + x}")
@@ -40,7 +40,7 @@ class ScalaListSpec extends FlatSpec with Matchers {
 
 
   it should "show the difference between reduceRight, foldRight and scanRight" in {
-    val abc = List("A", "B", "C")
+    val abc = collection.immutable.List("A", "B", "C")
 
     def add(x: String, res: String) = {
       println(s"op: $x + $res = ${x + res}")
