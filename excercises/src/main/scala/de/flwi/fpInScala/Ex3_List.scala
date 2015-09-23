@@ -169,5 +169,9 @@ object Ex3_List {
     def filter[A](as: List[A])(f: A => Boolean): List[A] = {
       foldRight(as, Nil: List[A])((cur, acc) => if(f(cur)) Cons(cur, acc) else acc)
     }
+
+    def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
+      concatenate(foldRight(as, Nil: List[List[B]])((cur, acc) => Cons(f(cur), acc)))
+    }
   }
 }
