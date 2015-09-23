@@ -72,4 +72,10 @@ class Ex3Spec extends FlatSpec with Matchers {
   it should "concatenate Lists correctly" in {
     List.concatenate(List(List(1,2), List(3,4), List(5,6))) shouldBe List(1,2,3,4,5,6)
   }
+  it should "add1toEachInt correctly" in {
+    List.add1toEachInt(List(1,2,3)) shouldBe List(2,3,4)
+  }
+  it should "toStringEachDouble correctly" in {
+    List.toStringEachDouble(List(1.0,2.0,3.0)) shouldBe List("1.0", "2.0", "3.0")
+  }
 }

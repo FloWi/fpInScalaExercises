@@ -154,6 +154,14 @@ object Ex3_List {
       foldRight(lists, Nil: List[A])(append)
     }
 
+    def add1toEachInt(ints: List[Int]): List[Int] = {
+      foldRight(ints, Nil: List[Int])((cur,acc) => Cons(cur + 1, acc))
+    }
+
+    def toStringEachDouble(doubles: List[Double]): List[String] = {
+      foldRight(doubles, Nil: List[String])((cur,acc) => Cons(cur.toString, acc))
+    }
+
     def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
   }
 }
