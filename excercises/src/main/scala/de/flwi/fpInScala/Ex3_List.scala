@@ -179,19 +179,12 @@ object Ex3_List {
     }
 
     def addingElementsOfTwoLists(first: List[Int], second: List[Int]): List[Int] = {
-      if(first == Nil || second == Nil) sys.error("Lists empty (possibly not the same length)")
 
-      @tailrec
-      def helper(l1: List[Int], l2: List[Int], result: List[Int]): List[Int] = {
-        if (l1 == Nil && l2 == Nil) reverse(result)
-        else {
-          val Cons(h1, t1) = l1
-          val Cons(h2, t2) = l2
-
-          helper(t1, t2, Cons(h1 + h2, result))
-        }
+      (first, second) match {
+        case (_, Nil) => Nil
+        case (Nil, _) => Nil
+        case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1+h2, addingElementsOfTwoLists(t1,t2))
       }
-      helper(first, second, Nil)
     }
 
     def zipWith[A](first: List[A], second: List[A])(f: (A,A) => A) = {
