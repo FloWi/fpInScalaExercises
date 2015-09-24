@@ -49,6 +49,15 @@ object Either {
     }
   }
 
+  def traverseFromSolution[E,A,B](es: List[A])(f: A => Either[E, B]): Either[E, List[B]] =
+    es match {
+      case Nil => Right(Nil)
+      case h::t =>
+        //funktion anwenden
+        //mit map2 auf Either[E, B] und Either[E, List[B]] die b :: bs funktion anwenden
+        (f(h) map2 traverseFromSolution(t)(f))((b, bs) => b :: bs)
+    }
+
   def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] =
     traverse(es)(e => e)
 
