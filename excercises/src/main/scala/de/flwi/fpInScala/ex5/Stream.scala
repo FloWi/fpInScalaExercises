@@ -111,6 +111,11 @@ object Stream {
     helper(0, 1)
   }
 
+  def fibsViaUnfold: Stream[Int] =
+    unfold[Int, (Int, Int)]((0,1)){
+      case(a, b) => Some(a, (b, a+b))
+    }
+
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
 
     def helper(cur: S): Stream[A] = {

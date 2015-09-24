@@ -106,4 +106,9 @@ class StreamSpec  extends FlatSpec with Matchers {
   it should "work correctly with an ending stream" in {
     Stream.unfold(1)(s => if(s < 5) Some(s, s+1) else None).toList shouldBe 1.to(4).toList
   }
+
+  "Stream.fibsViaUnfold" should "generate a Stream of fibonacci numbers" in {
+    Stream.fibsViaUnfold.take(10).toList shouldBe 0.to(9).map(Ex2_1.fibonacciTailRec).toList
+
+  }
 }
