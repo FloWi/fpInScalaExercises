@@ -115,4 +115,10 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream.fromViaUnfold(1).take(2).toList shouldBe List(1,2)
     Stream.fromViaUnfold(Int.MaxValue).take(2).toList shouldBe List(Int.MaxValue,Int.MinValue)
   }
+
+  "Stream.constantViaUnfold" should "generate an infinite number of values" in {
+    val list: List[Int] = Stream.constantViaUnfold(1).take(10000).toList
+    list.size shouldBe 10000
+    list.distinct.head shouldBe 1
+  }
 }
