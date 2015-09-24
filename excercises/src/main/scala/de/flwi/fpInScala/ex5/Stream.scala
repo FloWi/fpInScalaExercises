@@ -97,8 +97,8 @@ trait Stream[+A] {
   def flatMap[B](f: A => Stream[B]): Stream[B] =
     foldRight(empty[B])((a, acc) => f(a) append acc)
 
-  def zipWith[B](other: Stream[B]): Stream[(A,B)] = unfold((this, other)){
-    case (Cons(h1, t1), Cons(h2, t2)) => Some((h1(), h2()), (t1(), t2()))
+  def zipWith[B, C](other: Stream[B])(f: (A,B) => C): Stream[C] = unfold((this, other)){
+    case (Cons(h1, t1), Cons(h2, t2)) => Some(f(h1(), h2()), (t1(), t2()))
     case _ => None
   }
 

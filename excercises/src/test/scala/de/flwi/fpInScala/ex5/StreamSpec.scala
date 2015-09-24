@@ -98,9 +98,10 @@ class StreamSpec  extends FlatSpec with Matchers {
   }
 
   it should "zipWith correctly" in {
-    Stream(1,2).zipWith(Stream(1,2)).toList shouldBe List((1,1),(2,2))
-    Stream(1,2).zipWith(Stream(1)).toList shouldBe List((1,1))
-    Stream(1).zipWith(Stream(1,2)).toList shouldBe List((1,1))
+    val aggFn: (Int, Int) => Int = (a, b) => a + b
+    Stream(1,2).zipWith(Stream(1,2))(aggFn).toList shouldBe List(2,4)
+    Stream(1,2).zipWith(Stream(1))(aggFn).toList shouldBe List(2)
+    Stream(1).zipWith(Stream(1,2))(aggFn).toList shouldBe List(2)
   }
 
   it should "zipAll correctly" in {
