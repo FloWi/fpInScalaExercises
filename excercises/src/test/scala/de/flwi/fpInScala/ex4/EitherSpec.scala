@@ -35,4 +35,19 @@ class EitherSpec extends FlatSpec with Matchers {
 
     successful(1).map2(successful(2))(_+_) shouldBe successful(3)
   }
+
+  it should "sequence correctly" in {
+    // Implement sequence and traverse for Either. These should return the first error that’s encountered, if there is one.
+    Either.sequence(List(successful(1), successful(2), successful(3))) shouldBe (Right(List(1,2,3)): Either[String, List[Int]])
+    Either.sequence(List(failed, successful(2), successful(3))) shouldBe (Left("exception"): Either[String, List[Int]])
+  }
+
+  it should "traverse correctly" in {
+    // Implement sequence and traverse for Either. These should return the first error that’s encountered, if there is one.
+    Either.traverse(List(0,1,2,3))(a => Try(a*2)) shouldBe (Right(List(0, 2,4,6)): Either[String, List[Int]])
+    Either.traverse(List(0,1,2,3))(a =>
+      try {Right(a / 0)}
+      catch { case ex: Exception => Left("failed")}
+    ) shouldBe (Left("failed"): Either[String, List[Int]])
+  }
 }

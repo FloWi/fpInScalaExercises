@@ -1,6 +1,8 @@
 package de.flwi.fpInScala.ex4
 
-import scala.{Option => _, Either => _, Left => _, Right => _, _} // hide std library `Option` and `Either`, since we are writing our own in this chapter
+import scala.annotation.tailrec
+import scala.collection.mutable.ArrayBuffer
+import scala.{Either => _, Left => _, Option => _, Right => _} // hide std library `Option` and `Either`, since we are writing our own in this chapter
 
 sealed trait Either[+E,+A] {
   def map[B](f: A => B): Either[E, B] = this match {
@@ -29,9 +31,26 @@ case class Left[+E](get: E) extends Either[E,Nothing]
 case class Right[+A](get: A) extends Either[Nothing,A]
 
 object Either {
-  def traverse[E,A,B](es: List[A])(f: A => Either[E, B]): Either[E, List[B]] = sys.error("todo")
+  def traverse[E,A,B](es: List[A])(f: A => Either[E, B]): Either[E, List[B]] = {
+    val buf = ArrayBuffer.empty[B]
 
-  def sequence[E,A](es: List[Either[E,A]]): Either[E,List[A]] = sys.error("todo")
+    @tailrec
+    def helper(list: List[A]): Either[E, List[B]] = list match {
+      case Nil => Right(buf.toList)
+      case h :: cons => f(h) match {
+        case Left(e) => Left(e)
+        case Right(a) => buf += a; helper(cons)
+      }
+    }
+
+    es match {
+      case Nil => sys.error("called sequence on empty list")
+      case _ => helper(es)
+    }
+  }
+
+  def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] =
+    traverse(es)(e => e)
 
   def mean(xs: IndexedSeq[Double]): Either[String, Double] =
     if (xs.isEmpty)
