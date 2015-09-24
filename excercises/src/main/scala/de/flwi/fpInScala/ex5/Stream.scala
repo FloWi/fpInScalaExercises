@@ -70,6 +70,12 @@ trait Stream[+A] {
   def map[B](f: A => B): Stream[B] =
     foldRight(empty[B])((a, acc) => cons(f(a), acc))
 
+  def mapViaUnfold[B](f: A => B): Stream[B] =
+    unfold[B, Stream[A]](this){
+      case Cons(h, t) => Some(f(h()), t())
+      case Empty => None
+    }
+
   def filter(p: A => Boolean): Stream[A] =
     foldRight(empty[A])((a,acc) => if(p(a)) cons(a, acc) else acc)
 
