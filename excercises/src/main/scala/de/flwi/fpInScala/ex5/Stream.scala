@@ -103,6 +103,8 @@ object Stream {
 
   def from(n: Int): Stream[Int] = cons(n, from(n+1))
 
+  def fromViaUnfold(n: Int): Stream[Int] = unfold(n)(s => Some(s, s+1))
+
   def fibs: Stream[Int] = {
 
     def helper(a: Int, b: Int): Stream[Int] = {

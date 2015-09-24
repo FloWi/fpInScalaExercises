@@ -109,6 +109,10 @@ class StreamSpec  extends FlatSpec with Matchers {
 
   "Stream.fibsViaUnfold" should "generate a Stream of fibonacci numbers" in {
     Stream.fibsViaUnfold.take(10).toList shouldBe 0.to(9).map(Ex2_1.fibonacciTailRec).toList
+  }
 
+  "Stream.fromViaUnfold" should "generate an ascending Stream of intergers" in {
+    Stream.fromViaUnfold(1).take(2).toList shouldBe List(1,2)
+    Stream.fromViaUnfold(Int.MaxValue).take(2).toList shouldBe List(Int.MaxValue,Int.MinValue)
   }
 }
