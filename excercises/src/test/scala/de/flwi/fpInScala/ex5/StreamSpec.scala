@@ -22,6 +22,11 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream.empty[Int].takeWhile(_ < 5).toList shouldBe Nil
   }
 
+  it should "takeWhileViaFoldRight correctly" in {
+    Stream(1.to(10): _*).takeWhileViaFoldRight(_ < 5).toList shouldBe 1.to(4).toList
+    Stream.empty[Int].takeWhileViaFoldRight(_ < 5).toList shouldBe Nil
+  }
+
   it should "forAll correctly" in {
     Stream(2.to(10, 2): _*).forAll(_ % 2 == 0) shouldBe true
     Stream(1.to(10): _*).forAll(_ % 2 == 0) shouldBe false
