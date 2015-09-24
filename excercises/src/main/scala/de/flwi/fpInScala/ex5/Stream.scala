@@ -111,5 +111,15 @@ object Stream {
     helper(0, 1)
   }
 
-  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = sys.error("todo")
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
+
+    def helper(cur: S): Stream[A] = {
+      f(cur) match {
+        case None => empty
+        case Some((a, s)) => cons(a, helper(s))
+      }
+    }
+
+    helper(z)
+  }
 }
