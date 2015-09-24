@@ -1,6 +1,5 @@
 package de.flwi.fpInScala.ex5
 
-import Stream._
 trait Stream[+A] {
 
   def foldRight[B](z: => B)(f: (A, => B) => B): B = // The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.
@@ -17,6 +16,17 @@ trait Stream[+A] {
     case Empty => None
     case Cons(h, t) => if (f(h())) Some(h()) else t().find(f)
   }
+
+  def toList: List[A] = {
+
+    def helper(cur: Stream[A], res: List[A]): List[A] = cur match {
+      case Cons(a, cons) => helper(cons(), a() :: res)
+      case Empty => res.reverse
+    }
+
+    helper(this, Nil)
+  }
+
   def take(n: Int): Stream[A] = sys.error("todo")
 
   def drop(n: Int): Stream[A] = sys.error("todo")
