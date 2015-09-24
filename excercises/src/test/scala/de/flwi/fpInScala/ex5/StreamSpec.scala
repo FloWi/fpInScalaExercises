@@ -1,5 +1,6 @@
 package de.flwi.fpInScala.ex5
 
+import de.flwi.fpInScala.ex2.Ex2_1
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.mutable.ArrayBuffer
@@ -92,5 +93,9 @@ class StreamSpec  extends FlatSpec with Matchers {
   "Stream.from" should "generate an ascending Stream of integers" in {
     Stream.from(1).take(2).toList shouldBe List(1,2)
     Stream.from(Int.MaxValue).take(2).toList shouldBe List(Int.MaxValue,Int.MinValue)
+  }
+
+  "Stream.fibs" should "generate a Stream of fibonacci numbers" in {
+    Stream.fibs.take(10).toList shouldBe 0.to(9).map(Ex2_1.fibonacciTailRec).toList
   }
 }
