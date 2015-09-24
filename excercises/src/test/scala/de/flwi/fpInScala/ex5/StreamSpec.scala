@@ -88,4 +88,9 @@ class StreamSpec  extends FlatSpec with Matchers {
     list.size shouldBe 10000
     list.distinct.head shouldBe 1
   }
+
+  "Stream.from" should "generate an ascending Stream of integers" in {
+    Stream.from(1).take(2).toList shouldBe List(1,2)
+    Stream.from(Int.MaxValue).take(2).toList shouldBe List(Int.MaxValue,Int.MinValue)
+  }
 }
