@@ -110,6 +110,12 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream(1).zipAll(Stream(1,2)).toList shouldBe List((Some(1),Some(1)),(None,Some(2)))
   }
 
+  it should "evaluate startsWith properly" in {
+    Stream(1,2,3).startsWith(Stream(1,2)) shouldBe true
+    Stream(1,2,3).startsWith(Stream.empty) shouldBe true
+    Stream(1,2,3).startsWith(Stream(1,2,3,4)) shouldBe false
+  }
+
   "Stream.constant" should "generate an infinite number of values" in {
     val list: List[Int] = Stream.constant(1).take(10000).toList
     list.size shouldBe 10000
