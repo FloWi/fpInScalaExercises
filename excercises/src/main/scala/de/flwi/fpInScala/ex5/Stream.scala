@@ -97,6 +97,18 @@ trait Stream[+A] {
   def flatMap[B](f: A => Stream[B]): Stream[B] =
     foldRight(empty[B])((a, acc) => f(a) append acc)
 
+  def zipWith[B](other: Stream[B]): Stream[(A,B)] = unfold((this, other)){
+    case (Cons(h1, t1), Cons(h2, t2)) => Some((h1(), h2()), (t1(), t2()))
+    case _ => None
+  }
+
+  def zipAll[B](other: Stream[B]): Stream[(Option[A],Option[B])] = unfold((this, other)){
+    case (Empty, Empty) => None
+    case (Empty, Cons(h2, t2)) => Some((None, Some(h2())), (empty, t2()))
+    case (Cons(h1, t1), Empty) => Some((Some(h1()), None), (t1(), empty))
+    case (Cons(h1, t1), Cons(h2, t2)) => Some((Some(h1()), Some(h2())), (t1(), t2()))
+  }
+
   def startsWith[B](s: Stream[B]): Boolean = sys.error("todo")
 }
 case object Empty extends Stream[Nothing]

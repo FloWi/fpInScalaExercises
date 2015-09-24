@@ -97,6 +97,18 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream(1,2).flatMap(Stream(_)).toList shouldBe List(1,2)
   }
 
+  it should "zipWith correctly" in {
+    Stream(1,2).zipWith(Stream(1,2)).toList shouldBe List((1,1),(2,2))
+    Stream(1,2).zipWith(Stream(1)).toList shouldBe List((1,1))
+    Stream(1).zipWith(Stream(1,2)).toList shouldBe List((1,1))
+  }
+
+  it should "zipAll correctly" in {
+    Stream(1,2).zipAll(Stream(1,2)).toList shouldBe List((Some(1),Some(1)),(Some(2),Some(2)))
+    Stream(1,2).zipAll(Stream(1)).toList shouldBe List((Some(1),Some(1)),(Some(2),None))
+    Stream(1).zipAll(Stream(1,2)).toList shouldBe List((Some(1),Some(1)),(None,Some(2)))
+  }
+
   "Stream.constant" should "generate an infinite number of values" in {
     val list: List[Int] = Stream.constant(1).take(10000).toList
     list.size shouldBe 10000
