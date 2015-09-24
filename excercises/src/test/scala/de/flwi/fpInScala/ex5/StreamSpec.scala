@@ -60,7 +60,11 @@ class StreamSpec  extends FlatSpec with Matchers {
     buf.size shouldBe 2
   }
 
-  it should "return Nonwe as headOption of an empty Stream" in {
+  it should "return None as headOption of an empty Stream" in {
     Stream().headOption shouldBe None
+  }
+
+  it should "map correctly" in {
+    Stream(1,2,3).map(_.toString).toList shouldBe List("1", "2", "3")
   }
 }
