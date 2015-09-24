@@ -67,4 +67,9 @@ class StreamSpec  extends FlatSpec with Matchers {
   it should "map correctly" in {
     Stream(1,2,3).map(_.toString).toList shouldBe List("1", "2", "3")
   }
+
+  it should "filter correctly" in {
+    Stream(1.to(10): _*).filter(_ % 2 == 0).toList shouldBe List(2,4,6,8,10)
+    Stream.empty[Int].filter(_ % 2 == 0).toList shouldBe Nil
+  }
 }
