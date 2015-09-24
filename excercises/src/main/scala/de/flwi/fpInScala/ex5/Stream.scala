@@ -40,7 +40,13 @@ trait Stream[+A] {
     case Cons(h, t) if n > 1 => cons(h(), t().take(n - 1))
     case Cons(h, _) if n == 1 => cons(h(), empty)
     case _ => empty
-}
+  }
+
+  def takeViaUnfold(n: Int): Stream[A] = unfold((n, this)){
+      case (0, _) => None
+      case (remainder, Empty) => None
+      case (remainder, Cons(h, t)) => Some(h(), (remainder-1, t()))
+    }
 
   @tailrec
   final def drop(n: Int): Stream[A] = this match {
@@ -56,6 +62,12 @@ trait Stream[+A] {
 
   def takeWhileViaFoldRight(p: A => Boolean): Stream[A] =
     foldRight(empty[A])((value, b) => if(p(value)) cons(value, b) else empty)
+
+  def takeWhileViaUnfold(p: A => Boolean): Stream[A] = unfold(this){
+      case Cons(h,_) if !p(h())=> None
+      case Empty => None
+      case Cons(h,t) => Some(h(), t())
+    }
 
   def forAll(p: A => Boolean): Boolean =
     foldRight(true)((value, b) => p(value) && b)

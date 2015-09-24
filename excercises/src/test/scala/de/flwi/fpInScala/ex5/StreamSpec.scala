@@ -16,6 +16,10 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream(1.to(10): _*).take(3).toList shouldBe List(1, 2, 3)
   }
 
+  it should "takeViaUnfold(n) correctly" in {
+    Stream(1.to(10): _*).takeViaUnfold(3).toList shouldBe List(1, 2, 3)
+  }
+
   it should "drop(n) correctly" in {
     Stream(1.to(10): _*).drop(3).toList shouldBe 4.to(10).toList
   }
@@ -28,6 +32,11 @@ class StreamSpec  extends FlatSpec with Matchers {
   it should "takeWhileViaFoldRight correctly" in {
     Stream(1.to(10): _*).takeWhileViaFoldRight(_ < 5).toList shouldBe 1.to(4).toList
     Stream.empty[Int].takeWhileViaFoldRight(_ < 5).toList shouldBe Nil
+  }
+
+  it should "takeWhileViaUnfold correctly" in {
+    Stream(1.to(10): _*).takeWhileViaUnfold(_ < 5).toList shouldBe 1.to(4).toList
+    Stream.empty[Int].takeWhileViaUnfold(_ < 5).toList shouldBe Nil
   }
 
   it should "forAll correctly" in {
