@@ -12,7 +12,13 @@ class StreamSpec  extends FlatSpec with Matchers {
   it should "take(n) correctly" in {
     Stream(1.to(10): _*).take(3).toList shouldBe List(1, 2, 3)
   }
+
   it should "drop(n) correctly" in {
     Stream(1.to(10): _*).drop(3).toList shouldBe 4.to(10).toList
+  }
+
+  it should "takeWhile correctly" in {
+    Stream(1.to(10): _*).takeWhile(_ < 5).toList shouldBe 1.to(4).toList
+    Stream.empty[Int].takeWhile(_ < 5).toList shouldBe Nil
   }
 }
