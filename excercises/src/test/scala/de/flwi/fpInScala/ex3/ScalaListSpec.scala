@@ -73,4 +73,12 @@ class ScalaListSpec extends FlatSpec with Matchers {
 
   }
 
+  it should "help me understand foldRight" in {
+    val ints: scala.List[Int] = collection.immutable.List(1, 2, 3, 4, 5)
+    val empty: scala.List[Int] = collection.immutable.List.empty[Int]
+
+    ints.foldRight("")(_+_) shouldBe "12345"
+    ints.foldRight(empty)(_ :: _) shouldBe ints
+  }
+
 }
