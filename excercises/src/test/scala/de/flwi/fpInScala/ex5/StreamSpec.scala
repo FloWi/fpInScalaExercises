@@ -1,6 +1,8 @@
 package de.flwi.fpInScala.ex5
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
+
+import scala.collection.mutable.ArrayBuffer
 
 class StreamSpec  extends FlatSpec with Matchers {
 
@@ -30,5 +32,35 @@ class StreamSpec  extends FlatSpec with Matchers {
   it should "forAll correctly" in {
     Stream(2.to(10, 2): _*).forAll(_ % 2 == 0) shouldBe true
     Stream(1.to(10): _*).forAll(_ % 2 == 0) shouldBe false
+  }
+
+  it should "return headOption correctly and only evaluate the first element" in {
+    val buf = ArrayBuffer.empty[Int]
+    import Stream.cons
+    def f(n: Int): Int = {
+      buf += n
+      n
+    }
+    //empty is being used by matchers
+    val stream_1_2: Stream[Int] = cons(f(1), cons(f(2), Stream.empty[Int]))
+    stream_1_2.headOption shouldBe Some(1)
+    buf.toList shouldBe List(1)
+  }
+
+  it should "execute the elements in Stream.apply (as stated in the chapter notes)" in {
+    //https://github.com/fpinscala/fpinscala/wiki/Chapter-5:-Strictness-and-laziness#streamapply
+
+    val buf = ArrayBuffer.empty[Int]
+    def f(n: Int): Int = {
+      buf += n
+      n
+    }
+    Stream(f(1), f(2))
+
+    buf.size shouldBe 2
+  }
+
+  it should "return Nonwe as headOption of an empty Stream" in {
+    Stream().headOption shouldBe None
   }
 }
