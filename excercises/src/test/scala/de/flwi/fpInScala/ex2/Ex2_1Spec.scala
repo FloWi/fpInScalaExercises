@@ -17,7 +17,7 @@ class Ex2_1Spec extends FlatSpec with Matchers {
     Stream
       .from(0)
       .map(n => (fibonacci(n), fibonacciTailRec(n)))
-      .take(40)
+      .take(30)
       .toList
       .forall(t => t._1 == t._2) shouldBe true
   }
