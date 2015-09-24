@@ -67,12 +67,17 @@ trait Stream[+A] {
   // 5.7 map, filter, append, flatmap using foldRight. Part of the exercise is
   // writing your own function signatures.
 
-  def map[B](f: A => B): Stream[B] = foldRight(empty[B])((a, acc) => cons(f(a), acc))
+  def map[B](f: A => B): Stream[B] =
+    foldRight(empty[B])((a, acc) => cons(f(a), acc))
 
-  def filter(p: A => Boolean): Stream[A] = foldRight(empty[A])((a,acc) => if(p(a)) cons(a, acc) else acc)
+  def filter(p: A => Boolean): Stream[A] =
+    foldRight(empty[A])((a,acc) => if(p(a)) cons(a, acc) else acc)
 
   def append[B >: A](other: => Stream[B]): Stream[B] =
     foldRight(other)((h,t) => cons(h,t))
+
+  def flatMap[B](f: A => Stream[B]): Stream[B] =
+    foldRight(empty[B])((a, acc) => f(a) append acc)
 
   def startsWith[B](s: Stream[B]): Boolean = sys.error("todo")
 }

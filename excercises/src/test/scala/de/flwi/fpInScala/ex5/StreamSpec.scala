@@ -78,4 +78,8 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream(1,2).append(Stream()).toList shouldBe List(1,2)
     Stream().append(Stream(3,4)).toList shouldBe List(3,4)
   }
+
+  it should "flatMap correctly" in {
+    Stream(1,2).flatMap(Stream(_)).toList shouldBe List(1,2)
+  }
 }
