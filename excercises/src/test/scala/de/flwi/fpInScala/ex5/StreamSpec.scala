@@ -7,6 +7,11 @@ import scala.collection.mutable.ArrayBuffer
 
 class StreamSpec  extends FlatSpec with Matchers {
 
+  def f(n: Int, buffer: ArrayBuffer[Int]): Int = {
+    buffer += n
+    n
+  }
+
   "A stream" should "convert to a list correctly" in {
     Stream(1,2,3).toList shouldBe List(1,2,3)
     Stream().toList shouldBe Nil
@@ -61,11 +66,7 @@ class StreamSpec  extends FlatSpec with Matchers {
     //https://github.com/fpinscala/fpinscala/wiki/Chapter-5:-Strictness-and-laziness#streamapply
 
     val buf = ArrayBuffer.empty[Int]
-    def f(n: Int): Int = {
-      buf += n
-      n
-    }
-    Stream(f(1), f(2))
+    Stream(f(1, buf), f(2, buf))
 
     buf.size shouldBe 2
   }
@@ -124,6 +125,18 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream(1,2,3).hasSubsequence(Stream(2,3)) shouldBe true
     Stream(1,2,3).hasSubsequence(Stream.empty) shouldBe true
     Stream(1,2,3).hasSubsequence(Stream(1,2,3,4)) shouldBe false
+  }
+
+  it should "scanRight correctly" in {
+    Stream(1,2,3).scanRight(0)(_+_).toList shouldBe List(1+2+3+0, 2+3+0, 3+0, 0)
+  }
+
+  it should "scanRight without evaluating each element more than once" in {
+
+    val buf = ArrayBuffer.empty[Int]
+    Stream(f(1, buf), f(2, buf), f(3, buf)).scanRight(0)(_+_).toList shouldBe List(1+2+3+0, 2+3+0, 3+0, 0)
+
+    buf.toList shouldBe List(1,2,3)
   }
 
   "Stream.constant" should "generate an infinite number of values" in {
