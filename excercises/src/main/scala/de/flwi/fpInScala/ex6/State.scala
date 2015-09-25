@@ -1,5 +1,8 @@
 package de.flwi.fpInScala.ex6
 
+import scala.annotation.tailrec
+import scala.collection.mutable.ArrayBuffer
+
 
 trait RNG {
   def nextInt: (Int, RNG) // Should generate a random `Int`. We'll later define other functions in terms of `nextInt`.
@@ -64,7 +67,21 @@ object RNG {
     ((d1,d2,d3), rng3)
   }
 
-  def ints(count: Int)(rng: RNG): (List[Int], RNG) = ???
+  def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+    val buf = ArrayBuffer.empty[Int]
+
+    @tailrec
+    def helper(remainder: Int, currentRNG: RNG): (List[Int], RNG) = {
+      if(remainder == 0) (buf.toList, currentRNG)
+      else {
+        val (i, nextRNG) = int(currentRNG)
+        buf += i
+        helper(remainder - 1, nextRNG)
+      }
+    }
+
+    helper(count, rng)
+  }
 
   def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = ???
 

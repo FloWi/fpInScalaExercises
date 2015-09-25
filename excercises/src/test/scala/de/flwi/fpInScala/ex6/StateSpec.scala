@@ -49,4 +49,10 @@ class StateSpec  extends FlatSpec with Matchers {
     doubles.map(_._2).distinct.size shouldBe n
     doubles.map(_._3).distinct.size shouldBe n
   }
+
+  it should "generate ints correctly" in {
+    val (integers, _) = ints(n)(SimpleRNG(1))
+
+    integers.distinct.size shouldBe n
+  }
 }
