@@ -41,6 +41,26 @@ object RNG {
     } else res
   }
 
+  /*
+This will certainly generate a number in the range, but it’ll be skewed because Int.MaxValue may not be exactly divisible by n. So numbers that are less than the remainder of that division will come up more frequently. When nonNegativeInt generates numbers higher than the largest multiple of n that fits in a 32-bit integer, we should retry the generator and hope to get a smaller number.
+   */
+  def skewedNonNegativeLessThan(n: Int): Rand[Int] =
+    map(nonNegativeInt) { _ % n }
+
+  def nonNegativeLessThan(n: Int): Rand[Int] =
+    flatMap(nonNegativeInt) { i =>
+      val mod = i % n
+      if(i + (n-1)-mod >= 0) unit(mod) else nonNegativeLessThan(n) //<-- map is not enough here - flatMap to the rescue
+    }
+
+  def nonNegativeLessThanWithoutFlatMapFromBook(n: Int): Rand[Int] = { rng =>
+    val (i, rng2) = nonNegativeInt(rng)
+    val mod = i % n
+    if (i + (n-1) - mod >= 0)
+      (mod, rng2)
+    else nonNegativeLessThan(n)(rng)
+  }
+
   def double: Rand[Double] = {
     map(nonNegativeInt)(value => value.toDouble / Int.MaxValue)
   }
@@ -111,7 +131,10 @@ object RNG {
     helper(rng, fs, Nil)
   }
 
-  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = ???
+  def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = rng => {
+    val (a, rng2) = f(rng)
+    g(a)(rng2)
+  }
 }
 
 case class State[S,+A](run: S => (A, S)) {

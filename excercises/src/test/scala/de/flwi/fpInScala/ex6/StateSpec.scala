@@ -94,4 +94,11 @@ class StateSpec  extends FlatSpec with Matchers {
     ints(n)(SimpleRNG(1)) shouldBe intsViaSequence(n)(SimpleRNG(1))
   }
 
+  it should "calculate nonNegativeLessThan" in {
+    val rng: SimpleRNG = SimpleRNG(1)
+    1.to(n)
+      .map(i => (nonNegativeLessThan(i)(rng), nonNegativeLessThanWithoutFlatMapFromBook(i)(rng)))
+      .forall(tup => tup._1 == tup._2) shouldBe true
+  }
+
 }
