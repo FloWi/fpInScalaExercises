@@ -90,4 +90,8 @@ class StateSpec  extends FlatSpec with Matchers {
     lRNG shouldBe tRNG
   }
 
+  it should "compute ints and intsViaSequence identical" in {
+    ints(n)(SimpleRNG(1)) shouldBe intsViaSequence(n)(SimpleRNG(1))
+  }
+
 }
