@@ -39,7 +39,10 @@ object RNG {
     } else res
   }
 
-  def double(rng: RNG): (Double, RNG) = ???
+  def double(rng: RNG): (Double, RNG) = {
+    val (value, nextRNG) = nonNegativeInt(rng)
+    (value.toDouble / Int.MaxValue, nextRNG)
+  }
 
   def intDouble(rng: RNG): ((Int,Double), RNG) = ???
 
