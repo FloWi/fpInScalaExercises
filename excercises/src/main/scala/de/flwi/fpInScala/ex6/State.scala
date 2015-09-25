@@ -68,19 +68,18 @@ object RNG {
   }
 
   def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
-    val buf = ArrayBuffer.empty[Int]
 
     @tailrec
-    def helper(remainder: Int, currentRNG: RNG): (List[Int], RNG) = {
-      if(remainder == 0) (buf.toList, currentRNG)
+    def helper(remainder: Int, currentRNG: RNG, result: List[Int]): (List[Int], RNG) = {
+      if(remainder == 0) (result.reverse, currentRNG)
       else {
         val (i, nextRNG) = int(currentRNG)
-        buf += i
-        helper(remainder - 1, nextRNG)
+
+        helper(remainder - 1, nextRNG, i :: result)
       }
     }
 
-    helper(count, rng)
+    helper(count, rng, Nil)
   }
 
   def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = ???
