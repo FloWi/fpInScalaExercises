@@ -26,11 +26,15 @@ object RNG {
   def unit[A](a: A): Rand[A] =
     rng => (a, rng)
 
-  def map[A,B](s: Rand[A])(f: A => B): Rand[B] =
-    rng => {
-      val (a, rng2) = s(rng)
-      (f(a), rng2)
-    }
+// /*old impl*/
+//  def map[A,B](s: Rand[A])(f: A => B): Rand[B] =
+//    rng => {
+//      val (a, rng2) = s(rng)
+//      (f(a), rng2)
+//    }
+
+  def map[A,B](s: Rand[A])(f:A=>B): Rand[B] =
+    flatMap(s)(a => unit(f(a)))
 
   def nonNegativeInt(rng: RNG): (Int, RNG) = {
     val res@(value, nextRNG) = int(rng)
@@ -107,11 +111,20 @@ This will certainly generate a number in the range, but it’ll be skewed becaus
 
   def intsViaSequence(count: Int): Rand[List[Int]] = sequence(List.fill(count)(int))
 
+//  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = {
+//    rng =>
+//      val (a, rng1) = ra(rng)
+//      val (b, rng2) = rb(rng1)
+//      (f(a, b), rng2)
+//  }
   def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = {
-    rng =>
-      val (a, rng1) = ra(rng)
-      val (b, rng2) = rb(rng1)
-      (f(a, b), rng2)
+    flatMap(ra)(a => map(rb)(b => f(a, b)))
+
+// for-comprehension doesn't work yet, because flatMap and map aren't instance-methods
+//    for {
+//      a <- ra
+//      b <- rb
+//    } yield f(a,b)
   }
 
   def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] =
