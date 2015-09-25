@@ -1,7 +1,6 @@
 package de.flwi.fpInScala.ex6
 
 import scala.annotation.tailrec
-import scala.collection.mutable.ArrayBuffer
 
 
 trait RNG {
@@ -81,7 +80,12 @@ object RNG {
     helper(count, rng, Nil)
   }
 
-  def map2[A,B,C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = ???
+  def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = {
+    rng =>
+      val (a, rng1) = ra(rng)
+      val (b, rng2) = rb(rng1)
+      (f(a, b), rng2)
+  }
 
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
 

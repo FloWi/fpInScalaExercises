@@ -55,4 +55,12 @@ class StateSpec  extends FlatSpec with Matchers {
 
     integers.distinct.size shouldBe n
   }
+
+  it should "map2 correctly" in {
+    //same seed, same result
+    val (res1, _) = map2(int, int)((a,b) => a+b)(SimpleRNG(1))
+    val (res2, _) = map2(int, int)((a,b) => a+b)(SimpleRNG(1))
+    res1 shouldBe res2
+  }
+
 }
