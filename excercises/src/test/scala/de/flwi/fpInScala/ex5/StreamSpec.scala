@@ -120,6 +120,12 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream(1,2,3).tails.map(_.toList).toList shouldBe List(List(1,2,3), List(2,3), List(3), Nil )
   }
 
+  it should "evaluate hasSubsequence correctly" in {
+    Stream(1,2,3).hasSubsequence(Stream(2,3)) shouldBe true
+    Stream(1,2,3).hasSubsequence(Stream.empty) shouldBe true
+    Stream(1,2,3).hasSubsequence(Stream(1,2,3,4)) shouldBe false
+  }
+
   "Stream.constant" should "generate an infinite number of values" in {
     val list: List[Int] = Stream.constant(1).take(10000).toList
     list.size shouldBe 10000
