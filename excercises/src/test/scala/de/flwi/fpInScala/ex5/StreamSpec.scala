@@ -116,6 +116,10 @@ class StreamSpec  extends FlatSpec with Matchers {
     Stream(1,2,3).startsWith(Stream(1,2,3,4)) shouldBe false
   }
 
+  it should "calculate tails correctly" in {
+    Stream(1,2,3).tails.map(_.toList).toList shouldBe List(List(1,2,3), List(2,3), List(3), Nil )
+  }
+
   "Stream.constant" should "generate an infinite number of values" in {
     val list: List[Int] = Stream.constant(1).take(10000).toList
     list.size shouldBe 10000
