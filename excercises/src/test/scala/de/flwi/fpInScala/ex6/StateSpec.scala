@@ -81,4 +81,13 @@ class StateSpec  extends FlatSpec with Matchers {
     res1 shouldBe res2
   }
 
+  it should "sequence(int, int) should behave exactly like both(int, int)" in {
+    val (l1 :: l2 :: Nil, lRNG) = sequence(List(int, int))(SimpleRNG(1))
+    val ((t1, t2), tRNG) = both(int, int)(SimpleRNG(1))
+
+    l1 shouldBe t1
+    l2 shouldBe t2
+    lRNG shouldBe tRNG
+  }
+
 }

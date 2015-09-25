@@ -95,7 +95,19 @@ object RNG {
   def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] =
     map2(ra, rb)((_, _))
 
-  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
+  def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = rng => {
+
+    @tailrec
+    def helper(curRNG: RNG, remainingFs: List[Rand[A]], result: List[A]): (List[A], RNG) = {
+      remainingFs match {
+        case Nil => (result.reverse, curRNG)
+        case h :: tail =>
+          val (a, nextRNG) = h(curRNG)
+          helper(nextRNG, tail, a :: result)
+      }
+    }
+    helper(rng, fs, Nil)
+  }
 
   def flatMap[A,B](f: Rand[A])(g: A => Rand[B]): Rand[B] = ???
 }
