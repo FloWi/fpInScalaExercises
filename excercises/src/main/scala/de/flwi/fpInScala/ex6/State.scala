@@ -57,6 +57,11 @@ object RNG {
     ((d,i), rng2)
   }
 
+  def randIntDouble: Rand[(Int, Double)] = both(int, double)
+
+  def randDoubleInt: Rand[(Double, Int)] = both(double, int)
+
+
   def double3(rng: RNG): ((Double,Double,Double), RNG) = {
     val (d1, rng1) = double(rng)
     val (d2, rng2) = double(rng1)
@@ -86,6 +91,9 @@ object RNG {
       val (b, rng2) = rb(rng1)
       (f(a, b), rng2)
   }
+
+  def both[A,B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] =
+    map2(ra, rb)((_, _))
 
   def sequence[A](fs: List[Rand[A]]): Rand[List[A]] = ???
 

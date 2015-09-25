@@ -32,9 +32,27 @@ class StateSpec  extends FlatSpec with Matchers {
     doubles.distinct.size shouldBe n
   }
 
+  it should "generate randIntDouble correctly" in {
+    val (ints, doubles) = 1.to(n)
+      .map(seed => randIntDouble(SimpleRNG(seed))._1)
+      .unzip
+
+    ints.distinct.size shouldBe n
+    doubles.distinct.size shouldBe n
+  }
+
   it should "generate doubleInt correctly" in {
     val (doubles, ints) = 1.to(n)
       .map(seed => doubleInt(SimpleRNG(seed))._1)
+      .unzip
+
+    ints.distinct.size shouldBe n
+    doubles.distinct.size shouldBe n
+  }
+
+  it should "generate randDoubleInt correctly" in {
+    val (doubles, ints) = 1.to(n)
+      .map(seed => randDoubleInt(SimpleRNG(seed))._1)
       .unzip
 
     ints.distinct.size shouldBe n
