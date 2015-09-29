@@ -7,7 +7,7 @@ import RNG._
 
 import scala.collection.immutable
 
-class StateSpec  extends FlatSpec with Matchers {
+class RNGSpec  extends FlatSpec with Matchers {
 
   private val n: Int = 5000
 
@@ -100,5 +100,4 @@ class StateSpec  extends FlatSpec with Matchers {
       .map(i => (nonNegativeLessThan(i)(rng), nonNegativeLessThanWithoutFlatMapFromBook(i)(rng)))
       .forall(tup => tup._1 == tup._2) shouldBe true
   }
-
 }
